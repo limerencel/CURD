@@ -1,0 +1,137 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>用户注册</title>
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="bootstrap/css/bootstrap-select.min.css">
+		<script src="bootstrap/js/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="bootstrap/js/bootstrap-select.min.js"></script>
+		<style type="text/css">
+			.input-error {
+				border-color: #cb2d01;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="container">
+			<form class="form-horizontal" action="list.jsp">
+
+				<h5 class="page-header alert-success" style=" padding:10px; text-align: center;">
+					用户注册
+				</h5>
+
+				<div class="form-group">
+            <label for="username" class="col-sm-2 control-label">用户名：</label>
+            <div class="col-sm-10">
+                <input type="text" id="username" class="form-control" required name="username" placeholder="请输入用户名"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码：</label>
+            <div class="col-sm-10">
+                <input type="password" id="password" class="form-control" required name="password" placeholder="请输入密码"/>
+            </div>
+        </div>
+
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">姓名：</label>
+			<div class="col-sm-10">
+				<input type="text" id="name" class="form-control" name="name" required placeholder="请输入姓名" /></div>
+		</div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">邮箱：</label>
+            <div class="col-sm-10">
+                <input type="email" id="email" class="form-control" name="email" required placeholder="请输入邮箱"/></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">性别：</label>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" id="man" name="gender" required value="0"> 男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="girl" name="gender" required value="1"> 女
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="birthday" class="col-sm-2 control-label">出生日期：</label>
+            <div class="col-sm-10">
+                <input type="date" id="birthday" class="form-control" required name="birthday" placeholder="请选择出生日期"/></div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="province" class="col-sm-2 control-label">省份：</label>
+            <div class="col-sm-10">
+                <select name="province" id="province" required class="form-control selectpicker" data-live-search="true">
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="city" class="col-sm-2 control-label">城市：</label>
+            <div class="col-sm-10">
+                <select name="city" id="city" required class="form-control selectpicker" data-live-search="true">
+                    <option value="">请选择</option>
+                    <option value="南昌">南昌</option>
+                    <option value="九江">九江</option>
+                    <option value="赣州">赣州</option>
+                    <option value="抚州">抚州</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="area" class="col-sm-2 control-label">县/区：</label>
+            <div class="col-sm-10">
+                <select name="area" id="area" required class="form-control selectpicker" data-live-search="true">
+                    <option value="">请选择</option>
+                    <option value="">西湖区</option>
+                    <option value="">东湖区</option>
+                    <option value="">红谷滩区</option>
+                    <option value="">青山湖区</option>
+                </select>
+            </div>
+        </div>
+				<hr>
+				<div class="form-group" style="text-align: center;">
+					<input type="submit" class="btn btn-primary" value="注册">
+					<input type="reset" class="btn  btn-danger" value="重置">
+					<input type="button" class="btn  btn-warning" style="float: right; width: 100px;" onclick="location.href='login.html'"
+					 value="去登陆">
+
+				</div>
+			</form>
+		</div>
+
+	</body>
+
+    <script>
+
+        let provinceList;
+
+        $(function () {
+            $.get("/queryProvince", function(data) {
+                let html = "";
+
+                for(const province of data) {
+                    html += "<option value='" + province.id + "'>" + province.name + "</option>";
+                }
+                $("#province").html(html)
+
+                // 刷新UI组件
+                $('.selectpicker').selectpicker('refresh');
+            })
+        })
+
+    </script>
+</html>
