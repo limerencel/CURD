@@ -10,4 +10,8 @@ public class CityService {
     public List<City> findAllCities() {
         return CityDao.findAllCities();
     }
+
+    public List<City> findCitiesByProvinceId(String id) {
+        return CityDao.findCitiesByProvinceId(id);
+    }
 }

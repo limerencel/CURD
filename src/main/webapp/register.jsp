@@ -82,10 +82,6 @@
             <div class="col-sm-10">
                 <select name="city" id="city" required class="form-control selectpicker" data-live-search="true">
                     <option value="">请选择</option>
-                    <option value="南昌">南昌</option>
-                    <option value="九江">九江</option>
-                    <option value="赣州">赣州</option>
-                    <option value="抚州">抚州</option>
                 </select>
             </div>
         </div>
@@ -117,14 +113,14 @@
 
     <script>
 
-        let provinceList;
+        let provinceCode;
 
         $(function () {
             $.get("/queryProvince", function(data) {
                 let html = "";
 
                 for(const province of data) {
-                    html += "<option value='" + province.id + "'>" + province.name + "</option>";
+                    html += "<option value='" + province.code + "'>" + province.name + "</option>";
                 }
                 $("#province").html(html)
 
@@ -132,6 +128,25 @@
                 $('.selectpicker').selectpicker('refresh');
             })
         })
+
+        $('#province').on('change', function () {
+            provinceCode = $(this).val();
+            console.log(provinceCode);
+
+            $.get("/queryCity?provinceCode=" + (provinceCode || "110000"), function (data) {
+                let html = "";
+
+                for(const city of data) {
+                    html += "<option value='" + city.code + "'>" + city.name + "</option>";
+                }
+                $("#city").html(html)
+
+                // 刷新UI组件
+                $('.selectpicker').selectpicker('refresh');
+            })
+        });
+
+        // query cities, get cities from the first province by default
 
     </script>
 </html>

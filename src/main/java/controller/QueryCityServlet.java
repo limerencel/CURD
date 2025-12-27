@@ -21,10 +21,11 @@ public class QueryCityServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get province ID
-        String id = req.getParameter("province");
+        String id = req.getParameter("provinceCode");
+        System.out.println(id);
 
         // return cities back to frontend
-        List<City> cities = cityService.findAllCities();
+        List<City> cities = cityService.findCitiesByProvinceId(id);
 
         // Set JSON response type
         resp.setContentType("application/json;charset=utf-8");
