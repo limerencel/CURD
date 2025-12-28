@@ -21,4 +21,8 @@ public class UserService {
     public List<User> findAllUsers() {
         return UserDao.findAllUsers();
     }
+
+    public List<User> searchUserByKeyword(String keyword) {
+        return UserDao.searchUserByKeyword(keyword);
+    }
 }

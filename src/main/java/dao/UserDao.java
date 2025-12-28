@@ -108,4 +108,32 @@ public class UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static List<User> searchUserByKeyword(String keyword) {
+        String sql = "SELECT * FROM user WHERE username LIKE ?";
+        try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String pic = rs.getString("pic");
+                String email = rs.getString("email");
+                Integer gender = rs.getInt("gender");
+                LocalDate birthday =
+                        rs.getTimestamp("birthday")
+                                .toLocalDateTime()
+                                .toLocalDate();
+                String address = rs.getString("address");
+                users.add(new User(id, username, password, name, pic, email, gender, birthday, address));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
