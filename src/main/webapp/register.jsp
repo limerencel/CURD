@@ -19,7 +19,7 @@
 	<body>
 
 		<div class="container">
-			<form class="form-horizontal" action="list.jsp">
+			<form class="form-horizontal" action="/register">
 
 				<h5 class="page-header alert-success" style=" padding:10px; text-align: center;">
 					用户注册
@@ -110,6 +110,7 @@
     <script>
 
         let provinceCode, cityCode;
+        let isUsernameOkay = false, isEmailOkay = false;
 
         function queryCities(provinceCode) {
             $.get("/queryCity?provinceCode=" + provinceCode, function (data) {
@@ -183,17 +184,45 @@
 
             $.get("/checkUsername", { username: username }, function (data) {
                 if (data === "1") {
-                    // 用户已存在
+                    // user exists
                     $("#username").css("border", "1px solid red");
-                    $("#usernameMsg").text("用户名已存在");
                 } else {
-                    // 用户可用
+                    // username is okay
                     $("#username").css("border", "1px solid green");
-                    $("#usernameMsg").text("用户名可用");
+                    isUsernameOkay = true;
                 }
             });
         });
 
+        // validate email
+        $("#email").on("blur", function () {
+            const email = $(this).val().trim();
+
+            if (!email) {
+                $(this).css("border", "1px solid red");
+                return;
+            }
+
+            $.get("/checkEmail", { email: email }, function (data) {
+                if (data === "1") {
+                    // user exists, email is taken
+                    $("#email").css("border", "1px solid red");
+                } else {
+                    // can use email
+                    $("#email").css("border", "1px solid green");
+                    isEmailOkay = true;
+                }
+            });
+        });
+
+        // handle form submit - register
+        $(".form-horizontal").on("submit", function (e) {
+            if (!isUsernameOkay || !isEmailOkay) {
+                e.preventDefault();
+                alert("Please insert the correct username and email");
+                return false;
+            }
+        });
 
     </script>
 </html>
