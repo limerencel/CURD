@@ -21,7 +21,7 @@ public class CheckUsernameServlet extends HttpServlet {
         User user = userService.findUserByUsername(username);
 
         if (user == null) {
-            resp.getWriter().write("0"); // username doesn't exist
+            resp.getWriter().write("0"); // user doesn't exist
         } else {
             resp.getWriter().write("1");
 
