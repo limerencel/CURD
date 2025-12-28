@@ -10,5 +10,7 @@ public class ProvinceService {
         return ProvinceDao.getProvinceList();
     }
 
-
+    public String getNameByCode(String provinceId) {
+        return ProvinceDao.getNameByCode(provinceId);
+    }
 }

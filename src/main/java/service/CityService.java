@@ -14,4 +14,8 @@ public class CityService {
     public List<City> findCitiesByProvinceId(String id) {
         return CityDao.findCitiesByProvinceId(id);
     }
+
+    public String getNameByCode(String cityId) {
+        return CityDao.getNameByCode(cityId);
+    }
 }

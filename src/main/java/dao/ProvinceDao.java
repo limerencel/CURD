@@ -30,4 +30,19 @@ public class ProvinceDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getNameByCode(String provinceId) {
+        String sql = "SELECT * FROM province WHERE code = ?";
+        try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, provinceId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

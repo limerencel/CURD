@@ -1,17 +1,12 @@
 package dao;
 
-import entity.City;
 import entity.User;
 import utils.DataSourceUtils;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-public class userDao {
+public class UserDao {
     public static User findUserByUsername(String un) {
         String sql = "SELECT * FROM user WHERE username = ?";
         try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -64,5 +59,24 @@ public class userDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public static void addUser(User user) {
+        String sql = "INSERT INTO user (username, password, name, pic, email, gender, birthday, address) VALUES(?,?,?,?,?,?,?,?)";
+        try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getName());
+            ps.setString(4, user.getPic());
+            ps.setString(5, user.getEmail());
+            ps.setInt(6, user.getGender());
+            ps.setDate(7, java.sql.Date.valueOf(user.getBirthday()));
+            ps.setString(8, user.getAddress());
+
+            ps.executeUpdate(); // return int, the number of affected columns
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

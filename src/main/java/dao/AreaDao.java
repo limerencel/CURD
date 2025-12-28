@@ -29,4 +29,19 @@ public class AreaDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getNameByCode(String areaId) {
+        String sql = "SELECT * FROM area WHERE code = ?";
+        try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, areaId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

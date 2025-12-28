@@ -34,8 +34,9 @@ public class CityDao {
     }
 
     public static List<City> findCitiesByProvinceId(String provinceCode) {
-        String sql = "SELECT * FROM city WHERE provincecode = " + provinceCode;
+        String sql = "SELECT * FROM city WHERE provincecode = ?";
         try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, provinceCode);
             ResultSet rs = ps.executeQuery();
 
             List<City> cities = new ArrayList<>();
@@ -50,5 +51,20 @@ public class CityDao {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static String getNameByCode(String cityId) {
+        String sql = "SELECT * FROM city WHERE code = ?";
+        try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, cityId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("name");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

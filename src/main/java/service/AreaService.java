@@ -10,4 +10,8 @@ public class AreaService {
     public List<City> findAreaByCityId(String id) {
         return AreaDao.findAreaByCityId(id);
     }
+
+    public String getNameByCode(String area) {
+        return AreaDao.getNameByCode(area);
+    }
 }
