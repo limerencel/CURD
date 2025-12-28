@@ -1,5 +1,8 @@
 package controller;
 
+import entity.User;
+import service.userService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +17,14 @@ public class CheckUsernameServlet extends HttpServlet {
         // get username to validate
         String username = req.getParameter("username");
 
-        //TODO let userService to validate the username and returns a flag
+        //find user by username
+        User user = userService.findUserByUsername(username);
 
-        //TODO return the flag to frontend
+        if (user == null) {
+            resp.getWriter().write("0"); // username doesn't exist
+        } else {
+            resp.getWriter().write("1");
+
+        }
     }
 }

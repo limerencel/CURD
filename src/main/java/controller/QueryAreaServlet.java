@@ -3,7 +3,7 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import entity.City;
 import entity.Province;
-import service.CityService;
+import service.AreaService;
 import service.ProvinceService;
 
 import javax.servlet.ServletException;
@@ -12,27 +12,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/queryCity")
-public class QueryCityServlet extends HttpServlet {
-    private CityService cityService = new CityService();
+@WebServlet("/queryArea")
+public class QueryAreaServlet extends HttpServlet {
+    private AreaService areaService = new AreaService();
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // get province ID
-        String id = req.getParameter("provinceCode");
+        // get city ID
+        String id = req.getParameter("cityCode");
 
-        // return cities back to frontend
-        List<City> cities = cityService.findCitiesByProvinceId(id);
+        // return area list
+        List<City> area = areaService.findAreaByCityId(id);
 
-        // Set JSON response type
+        // set response type as JSON
         resp.setContentType("application/json;charset=utf-8");
 
         // convert to JSON
-        String cityJsonList = JSON.toJSONString(cities);
+        String provinceJsonList = JSON.toJSONString(area);
 
-        // return to frontend
-        resp.getWriter().write(cityJsonList);
+        // return data back
+        resp.getWriter().write(provinceJsonList);
+
     }
 }

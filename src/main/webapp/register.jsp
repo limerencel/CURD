@@ -111,6 +111,28 @@
 
         let provinceCode, cityCode;
 
+        function queryCities(provinceCode) {
+            $.get("/queryCity?provinceCode=" + provinceCode, function (data) {
+                let html = '<option value="">请选择</option>';
+                for(const city of data) {
+                    html += "<option value='" + city.code + "'>" + city.name + "</option>";
+                }
+                $("#city").html(html);
+                $('.selectpicker').selectpicker('refresh');
+            })
+        }
+
+        function queryArea(cityCode) {
+            $.get("/queryArea?cityCode=" + cityCode, function (data) {
+                let html = '<option value="">请选择</option>';
+                for(const area of data) {
+                    html += "<option value='" + area.code + "'>" + area.name + "</option>";
+                }
+                $("#area").html(html);
+                $('.selectpicker').selectpicker('refresh');
+            })
+        }
+
         $(function () {
             // 初始化省份
             $.get("/queryProvince", function(data) {
@@ -150,27 +172,27 @@
             }
         });
 
-        function queryCities(provinceCode) {
-            $.get("/queryCity?provinceCode=" + provinceCode, function (data) {
-                let html = '<option value="">请选择</option>';
-                for(const city of data) {
-                    html += "<option value='" + city.code + "'>" + city.name + "</option>";
-                }
-                $("#city").html(html);
-                $('.selectpicker').selectpicker('refresh');
-            })
-        }
+        // validate the username
+        $("#username").on("blur", function () {
+            const username = $(this).val().trim();
 
-        function queryArea(cityCode) {
-            $.get("/queryArea?cityCode=" + cityCode, function (data) {
-                let html = '<option value="">请选择</option>';
-                for(const area of data) {
-                    html += "<option value='" + area.code + "'>" + area.name + "</option>";
+            if (!username) {
+                $(this).css("border", "1px solid red");
+                return;
+            }
+
+            $.get("/checkUsername", { username: username }, function (data) {
+                if (data === "1") {
+                    // 用户已存在
+                    $("#username").css("border", "1px solid red");
+                    $("#usernameMsg").text("用户名已存在");
+                } else {
+                    // 用户可用
+                    $("#username").css("border", "1px solid green");
+                    $("#usernameMsg").text("用户名可用");
                 }
-                $("#area").html(html);
-                $('.selectpicker').selectpicker('refresh');
-            })
-        }
+            });
+        });
 
 
     </script>
