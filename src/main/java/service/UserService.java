@@ -3,6 +3,8 @@ package service;
 import dao.UserDao;
 import entity.User;
 
+import java.util.List;
+
 public class UserService {
     public User findUserByUsername(String username) {
         return UserDao.findUserByUsername(username);
@@ -14,5 +16,9 @@ public class UserService {
 
     public void register(User user) {
         UserDao.addUser(user);
+    }
+
+    public List<User> findAllUsers() {
+        return UserDao.findAllUsers();
     }
 }
