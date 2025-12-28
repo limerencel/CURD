@@ -12,7 +12,7 @@
 	<body>
 		<div class="container">
 			<h2 style="text-align: center;position: relative;">
-				<span>欢迎您：张三</span>
+				<span >欢迎您: ${name}</span>
 
 				<a href="login.jsp" class="btn btn-danger" style="position: absolute;right: 0;">注销</a>
 			</h2>
@@ -128,4 +128,8 @@
 				</div>
 		</div>
 	</body>
+
+	<script>
+
+	</script>
 </html>
