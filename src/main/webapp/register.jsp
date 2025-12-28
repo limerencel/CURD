@@ -91,10 +91,6 @@
             <div class="col-sm-10">
                 <select name="area" id="area" required class="form-control selectpicker" data-live-search="true">
                     <option value="">请选择</option>
-                    <option value="">西湖区</option>
-                    <option value="">东湖区</option>
-                    <option value="">红谷滩区</option>
-                    <option value="">青山湖区</option>
                 </select>
             </div>
         </div>
@@ -113,40 +109,69 @@
 
     <script>
 
-        let provinceCode;
+        let provinceCode, cityCode;
 
         $(function () {
+            // 初始化省份
             $.get("/queryProvince", function(data) {
-                let html = "";
-
+                let html = '<option value="">请选择</option>';
                 for(const province of data) {
                     html += "<option value='" + province.code + "'>" + province.name + "</option>";
                 }
-                $("#province").html(html)
-
-                // 刷新UI组件
-                $('.selectpicker').selectpicker('refresh');
-            })
-        })
-
-        $('#province').on('change', function () {
-            provinceCode = $(this).val();
-            console.log(provinceCode);
-
-            $.get("/queryCity?provinceCode=" + (provinceCode || "110000"), function (data) {
-                let html = "";
-
-                for(const city of data) {
-                    html += "<option value='" + city.code + "'>" + city.name + "</option>";
-                }
-                $("#city").html(html)
-
-                // 刷新UI组件
+                $("#province").html(html);
                 $('.selectpicker').selectpicker('refresh');
             })
         });
 
-        // query cities, get cities from the first province by default
+        $('#province').on('change', function () {
+            provinceCode = $(this).val();
+
+            // 清空下级选项
+            $("#city").html('<option value="">请选择</option>');
+            $("#area").html('<option value="">请选择</option>');
+            $('.selectpicker').selectpicker('refresh');
+
+            // 加载城市
+            if(provinceCode) {
+                queryCities(provinceCode);
+            }
+        });
+
+        $("#city").on("change", function () {
+            cityCode = $(this).val();
+
+            // 清空区县
+            $("#area").html('<option value="">请选择</option>');
+            $('.selectpicker').selectpicker('refresh');
+
+            // 加载区县
+            if(cityCode) {
+                queryArea(cityCode);
+            }
+        });
+
+        function queryCities(provinceCode) {
+            $.get("/queryCity?provinceCode=" + provinceCode, function (data) {
+                let html = '<option value="">请选择</option>';
+                for(const city of data) {
+                    html += "<option value='" + city.code + "'>" + city.name + "</option>";
+                }
+                $("#city").html(html);
+                $('.selectpicker').selectpicker('refresh');
+            })
+        }
+
+        function queryArea(cityCode) {
+            $.get("/queryArea?cityCode=" + cityCode, function (data) {
+                let html = '<option value="">请选择</option>';
+                for(const area of data) {
+                    html += "<option value='" + area.code + "'>" + area.name + "</option>";
+                }
+                $("#area").html(html);
+                $('.selectpicker').selectpicker('refresh');
+            })
+        }
+
 
     </script>
 </html>
