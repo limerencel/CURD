@@ -1,5 +1,8 @@
 package controller;
 
+import entity.User;
+import service.userService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +14,17 @@ import java.io.IOException;
 public class CheckEmailServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // get username to validate
-        String username = req.getParameter("email");
+        // get email to validate
+        String email = req.getParameter("email");
+        System.out.println("email: "+email);
 
-        //TODO let userService to validate the email and returns a flag
+        User user = userService.findUserByEmail(email);
 
-        //TODO return the flag to frontend
+        if (user == null) {
+            resp.getWriter().write("0"); // user doesn't exist
+        } else {
+            resp.getWriter().write("1");
+
+        }
     }
 }

@@ -21,11 +21,37 @@ public class userDao {
             User user = new User();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String username = rs.getString("username");
                 String password = rs.getString("password");
                 String name = rs.getString("name");
                 String pic = rs.getString("pic");
                 String email = rs.getString("email");
+                Integer gender = rs.getInt("gender");
+                LocalDate birthday =
+                        rs.getTimestamp("birthday")
+                                .toLocalDateTime()
+                                .toLocalDate();
+                String address = rs.getString("address");
+                return new User(id,un,password,name,pic,email,gender,birthday,address);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public static User findUserByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+        try(Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            User user = new User();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String pic = rs.getString("pic");
                 Integer gender = rs.getInt("gender");
                 LocalDate birthday =
                         rs.getTimestamp("birthday")
