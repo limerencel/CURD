@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -40,71 +42,23 @@
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tr class="active">
-							<td>lisi</td>
-							<td><a href="detail.jsp">李四 </a></td>
-							<td><img src="https://www.baidu.com/favicon.ico" alt="" width="20" height="20"></td>
-							<td>1998-09-21</td>
-							<td>110@zhangsan.com</td>
-							<td>山西太原</td>
-							<td>女</td>
-							<td>
-								<a href="update.jsp">修改</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>wangwu</td>
-							<td><a href="detail.jsp">王五 </a></td>
-							<td><img src="https://www.mi.com/favicon.ico" alt="" width="20" height="20"></td>
-							<td>1998-09-21</td>
-							<td>110@zhangsan.com</td>
-							<td>陕西西安</td>
-							<td>男</td>
-							<td>
-								<a href="update.jsp">修改</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
-						<tr class="active">
-							<td>zhaoliu</td>
-							<td><a href="detail.jsp">赵六 </a></td>
-							<td><img src="https://www.taobao.com/favicon.ico" alt="" width="20" height="20"></td>
-							<td>1998-09-21</td>
-							<td>110@zhangsan.com</td>
-							<td>河北石家庄</td>
-							<td>男</td>
-							<td>
-								<a href="update.jsp">修改</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>zhangsan123</td>
-							<td><a href="detail.jsp">张三 </a></td>
-							<td><img src="https://www.vivo.com/favicon.ico" alt="" width="20" height="20"></td>
-							<td>1998-09-21</td>
-							<td>110@zhangsan.com</td>
-							<td>山东济南</td>
-							<td>男</td>
-							<td>
-								<a href="update.jsp">修改</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
-						<tr class="active">
-							<td>zhaoliu</td>
-							<td><a href="detail.jsp">赵六 </a></td>
-							<td class="jqzoom" ><img src="https://www.taobao.com/favicon.ico" alt="" width="20" height="20"></td>
-							<td>1998-09-21</td>
-							<td>110@zhangsan.com</td>
-							<td>河北石家庄</td>
-							<td>男</td>
-							<td>
-								<a href="update.jsp">修改</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
+						<tbody>
+						<c:forEach items="${users}" var="user" varStatus="status">
+							<tr class="${status.index % 2 == 0 ? 'active' : ''}">
+								<td>${user.username}</td>
+								<td><a href="detail?id=${user.id}">${user.name}</a></td>
+								<td><img src="https://www.baidu.com/favicon.ico" alt="" width="20" height="20"></td>
+								<td>${user.birthday}</td>
+								<td>${user.email}</td>
+								<td>${user.address}</td>
+								<td>${user.gender == 1 ? '男' : '女'}</td>
+								<td>
+									<a href="update?id=${user.id}">修改</a>
+									<a href="javascript:void(0);" onclick="deleteUser(${user.id})">删除</a>
+								</td>
+							</tr>
+						</c:forEach>
+						</tbody>
 					</table>
 					<nav class="text-center" aria-label="Page navigation">
 						<ul class="pagination">
