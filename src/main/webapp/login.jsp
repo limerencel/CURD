@@ -12,7 +12,7 @@
 	<body>
 
 		<div class="container">
-			<form class="form-horizontal" action="list.jsp">
+			<form class="form-horizontal" action="/login">
 
 				<h5 class="page-header alert-info" style=" padding:10px; text-align: center;">
 					用户登录
@@ -27,7 +27,7 @@
 				<div class="form-group">
 					<label for="password" class="col-sm-4 control-label">密码：</label>
 					<div class="col-sm-4">
-						<input type="password" id="password" class="form-control" required name="password" placeholder="请输入用户名" />
+						<input type="password" id="password" class="form-control" required name="password" placeholder="请输入密码" />
 					</div>
 				</div>
 
@@ -38,7 +38,6 @@
 					</div>
 					<div class="col-sm-1">
 						<a href="javascript:location.reload()"><img src="checkCode.jsp" alt=""></a>
-
 					</div>
 
 				</div>
@@ -65,4 +64,26 @@
 		</div>
 
 	</body>
+
+	<script>
+		$(".form-horizontal").on("submit", function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/login",
+				type: "POST",
+				data: $(this).serialize(),
+				success: function(response) {
+					let result = JSON.parse(response);
+					if (result.success) {
+						window.location.href = "/list.jsp";
+					} else {
+						alert(result.message);
+					}
+				},
+				error: function() {
+					alert("something went wrong");
+				}
+			});
+		});
+	</script>
 </html>
