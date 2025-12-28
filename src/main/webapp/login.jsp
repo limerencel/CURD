@@ -75,7 +75,7 @@
 				success: function(response) {
 					let result = JSON.parse(response);
 					if (result.success) {
-						window.location.href = "/list.jsp";
+						window.location.href = "/list";
 					} else {
 						alert(result.message);
 					}
