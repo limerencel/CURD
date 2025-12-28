@@ -1,7 +1,7 @@
 package controller;
 
 import entity.User;
-import service.userService;
+import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @WebServlet("/checkEmail")
 public class CheckEmailServlet extends HttpServlet {
+    private UserService userService = new UserService();
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get email to validate
