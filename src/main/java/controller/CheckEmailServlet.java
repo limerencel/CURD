@@ -17,7 +17,6 @@ public class CheckEmailServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get email to validate
         String email = req.getParameter("email");
-        System.out.println("email: "+email);
 
         User user = userService.findUserByEmail(email);
 
