@@ -13,7 +13,7 @@
 <body>
 <div class="container">
 	<h2 style="text-align: center;position: relative;">
-		<span>欢迎您: ${name}</span>
+		<span>欢迎您: ${loginUser.name}</span>
 		<a href="login.jsp" class="btn btn-danger" style="position: absolute;right: 0;">注销</a>
 	</h2>
 
@@ -24,10 +24,8 @@
 	<!-- 搜索表单 -->
 	<form class="navbar-form navbar-left" id="searchForm">
 		<div class="form-group">
-			<!-- 修复1: 给输入框添加 id 和 name -->
 			<input type="text" id="searchInput" name="keyword" class="form-control" placeholder="请输入用户名...">
 		</div>
-		<!-- 修复2: 按钮类型改为 button，不用 submit -->
 		<button type="button" class="btn btn-primary" id="searchBtn">搜索</button>
 	</form>
 
@@ -85,7 +83,6 @@
 	function searchUsers() {
 		let keyword = $("#searchInput").val().trim();
 
-		// 注意：Servlet URL 要对
 		$.get("${pageContext.request.contextPath}/search", {keyword: keyword}, function(users) {
 			console.log("收到的JSON数据:", users);
 			renderTable(users);
