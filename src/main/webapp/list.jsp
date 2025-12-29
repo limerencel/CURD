@@ -150,7 +150,6 @@
 		if (confirm("确定要删除这个用户吗？")) {
 			$.post("${pageContext.request.contextPath}/delete", {id: id}, function(response) {
 				alert("删除成功");
-				// 删除后重新执行一次搜索（如果框里有字，就按字搜；没字就是搜全部）
 				searchUsers();
 			});
 		}

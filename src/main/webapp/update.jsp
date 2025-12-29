@@ -152,32 +152,19 @@
     <script>
         $(document).ready(function() {
 
-            // 1. 点击头像 -> 触发文件选择框
             $("#picPreview").click(function() {
                 $("#fileSelect").click();
             });
 
-            // 2. 监听文件选择变化 (核心逻辑融合)
             $("#fileSelect").change(function() {
                 let file = this.files[0];
                 if (!file) return;
 
-                // ============================================
-                // 第一步：你喜欢的【本地即时预览】功能
-                // ============================================
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                    // 这里用 e.target.result (Base64编码) 直接替换 src
-                    // 用户完全感觉不到延迟，体验极佳！
                     $("#picPreview").attr("src", e.target.result);
                 }
                 reader.readAsDataURL(file);
-
-
-                // ============================================
-                // 第二步：后台【静默上传】功能
-                // ============================================
-                // 虽然用户已经看到图了，但我们还需要把图真正传给服务器
 
                 let formData = new FormData();
                 formData.append("file", file); // 对应 UploadServlet
@@ -189,10 +176,6 @@
                     processData: false,
                     contentType: false,
                     success: function(serverReturnedPath) {
-                        // 上传成功了！
-
-                        // 把服务器返回的路径（例如 /images/uuid.png）填入隐藏域
-                        // 这样等下用户点“修改信息”时，提交的就是这个新路径
                         console.log(serverReturnedPath)
                         $("#finalPicPath").val(serverReturnedPath);
 
@@ -200,7 +183,6 @@
                     },
                     error: function() {
                         alert("警告：图片上传服务器失败！请检查网络。");
-                        // 如果失败了，你可能想把头像恢复成旧的，或者提示用户
                     }
                 });
             });
