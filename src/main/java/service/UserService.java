@@ -25,4 +25,8 @@ public class UserService {
     public List<User> searchUserByKeyword(String keyword) {
         return UserDao.searchUserByKeyword(keyword);
     }
+
+    public void deleteUserById(Integer id) {
+        UserDao.deleteUserById(id);
+    }
 }

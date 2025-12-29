@@ -87,7 +87,6 @@
 
 		// 注意：Servlet URL 要对
 		$.get("${pageContext.request.contextPath}/search", {keyword: keyword}, function(users) {
-			// 调试：建议打开控制台(F12)看打印出来的到底是什么
 			console.log("收到的JSON数据:", users);
 			renderTable(users);
 		});
@@ -111,7 +110,7 @@
                     <tr class="\${rowClass}">
                         <td>\${user.username}</td>
                         <td><a href="detail?id=\${user.id}">\${user.name}</a></td>
-                        <td><img src="https://www.baidu.com/favicon.ico" alt="" width="20" height="20"></td>
+                        <td><img src="\${user.pic}" alt="" width="20" height="20"></td>
                         <td>\${birthday}</td>
                         <td>\${user.email}</td>
                         <td>\${user.address}</td>

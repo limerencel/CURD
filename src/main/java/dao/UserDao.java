@@ -136,4 +136,15 @@ public class UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteUserById(Integer id) {
+        String sql = "DELETE FROM user WHERE id = ?";
+        try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate(); // return int, the number of affected columns
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
