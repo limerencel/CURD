@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
             resp.getWriter().write("{\"success\": false, \"message\": \"username or password is wrong\"}");
         } else {
             session.setAttribute("name", user.getName());
+            session.setAttribute("loginUser", user);
             resp.getWriter().write("{\"success\": true, \"message\": \"login successfully\"}");
         }
 
