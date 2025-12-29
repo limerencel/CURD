@@ -33,13 +33,24 @@ public class LoginFilter implements Filter {
         String requestURI = request.getRequestURI();
 
         // 2. 白名单检查 (建议使用 contains 判断，防止项目路径 ContextPath 导致 equals 匹配失败)
-        if (requestURI.contains("/login.jsp") ||
-                requestURI.contains("/register.jsp") ||
-                requestURI.contains("/css/") ||
-                requestURI.contains("/js/") ||
-                requestURI.contains("/images/") ||
-                requestURI.contains("/login") ||      // 登录 Servlet
-                requestURI.contains("/checkCode")     // 验证码等
+        if (requestURI.contains("/checkCode.jsp") ||
+                requestURI.equals("/login.jsp") ||
+                requestURI.equals("/register.jsp") ||
+                requestURI.equals("/checkUsername") ||
+                requestURI.equals("/checkEmail") ||
+                requestURI.equals("/login") ||
+                requestURI.equals("/register") ||
+                requestURI.equals("/queryProvince") ||
+                requestURI.equals("/queryCity") ||
+                requestURI.equals("/queryArea") ||
+                requestURI.equals("/favicon.ico") ||
+
+                // 目录放行
+                requestURI.startsWith("/bootstrap") ||
+                requestURI.startsWith("/font") ||
+                requestURI.startsWith("/images") ||
+                requestURI.startsWith("/js") ||
+                requestURI.startsWith("/upload")
         ) {
             filterChain.doFilter(request, response);
             return;
