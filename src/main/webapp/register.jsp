@@ -53,10 +53,10 @@
             <label class="col-sm-2 control-label">性别：</label>
             <div class="col-sm-10">
                 <label class="radio-inline">
-                    <input type="radio" id="man" name="gender" required value="0"> 男
+                    <input type="radio" id="man" name="gender" required value="1"> 男
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" id="girl" name="gender" required value="1"> 女
+                    <input type="radio" id="girl" name="gender" required value="0"> 女
                 </label>
             </div>
         </div>
