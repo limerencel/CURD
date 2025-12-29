@@ -14,7 +14,7 @@
 <div class="container">
 	<h2 style="text-align: center;position: relative;">
 		<span>欢迎您: ${loginUser.name}</span>
-		<a href="login.jsp" class="btn btn-danger" style="position: absolute;right: 0;">注销</a>
+		<a href="/logout" class="btn btn-danger" style="position: absolute;right: 0;">注销</a>
 	</h2>
 
 	<h5 class="page-header alert-info" style="margin:0px; padding:10px; margin-bottom:10px;">
