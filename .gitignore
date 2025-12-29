@@ -38,4 +38,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-./src/main/webapp/WEB-INF/web-xml
+src/main/webapp/WEB-INF/web.xml
