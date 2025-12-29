@@ -5,10 +5,7 @@ import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import javax.swing.plaf.synth.SynthToolBarUI;
 import java.io.IOException;
 
@@ -24,6 +21,7 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String checkCode = req.getParameter("checkCode");
+        String rememberMe = req.getParameter("rememberMe");
 
         // check if checkCode is correct
         HttpSession session = req.getSession();
@@ -39,10 +37,15 @@ public class LoginServlet extends HttpServlet {
         } else if (user == null || !password.equals(user.getPassword())) {
             resp.getWriter().write("{\"success\": false, \"message\": \"username or password is wrong\"}");
         } else {
-            session.setAttribute("name", user.getName());
             session.setAttribute("loginUser", user);
             resp.getWriter().write("{\"success\": true, \"message\": \"login successfully\"}");
         }
 
+        if (rememberMe != null) {
+            Cookie cookie = new Cookie("userId", user.getId() + "");
+            cookie.setPath("/");
+            cookie.setMaxAge(60*60);
+            resp.addCookie(cookie);
+        }
     }
 }
