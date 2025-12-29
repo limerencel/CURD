@@ -1,5 +1,6 @@
 package dao;
 
+import com.sun.jmx.snmp.SnmpString;
 import entity.User;
 import utils.DataSourceUtils;
 
@@ -142,6 +143,49 @@ public class UserDao {
         try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate(); // return int, the number of affected columns
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static User findUserById(Integer id) {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String pic = rs.getString("pic");
+                String email = rs.getString("email");
+                Integer gender = rs.getInt("gender");
+                LocalDate birthday =
+                        rs.getTimestamp("birthday")
+                                .toLocalDateTime()
+                                .toLocalDate();
+                String address = rs.getString("address");
+                return new User(id, username, password, name, pic, email, gender, birthday, address);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public static void updateUser(User user) {
+        String sql = "UPDATE user SET name=?, email=?, gender=?, birthday=?, address=? WHERE id=?";
+        try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setInt(3, user.getGender());
+            ps.setDate(4, java.sql.Date.valueOf(user.getBirthday()));
+            ps.setString(5, user.getAddress());
+            ps.setInt(6, user.getId());
+
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

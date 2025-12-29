@@ -29,4 +29,12 @@ public class UserService {
     public void deleteUserById(Integer id) {
         UserDao.deleteUserById(id);
     }
+
+    public User findUserById(Integer id) {
+        return UserDao.findUserById(id);
+    }
+
+    public void updateUser(User user) {
+        UserDao.updateUser(user);
+    }
 }

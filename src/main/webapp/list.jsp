@@ -129,6 +129,8 @@
 
 	// 页面加载完成后绑定事件
 	$(document).ready(function() {
+        // render table when page is loaded
+        searchUsers();
 		// 绑定搜索按钮
 		$("#searchBtn").on("click", searchUsers);
 
@@ -139,7 +141,6 @@
 				searchUsers();
 			}
 		}).on("input", function() {
-			// 节流：如果是实时搜索，建议稍微延时，避免请求过于频繁，这里先保持原样
 			searchUsers();
 		});
 	});
