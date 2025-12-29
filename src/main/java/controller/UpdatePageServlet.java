@@ -40,6 +40,9 @@ public class UpdatePageServlet extends HttpServlet {
         String email = req.getParameter("email");
         String address = req.getParameter("address");
         Integer gender = Integer.parseInt(req.getParameter("gender"));
+        String picPath = req.getParameter("pic");
+
+        System.out.println("IMG Path is: " + picPath);
 
         User user = new User();
         user.setName(name);
@@ -47,6 +50,7 @@ public class UpdatePageServlet extends HttpServlet {
         user.setGender(gender);
         user.setEmail(email);
         user.setId(Integer.parseInt(idStr));
+        user.setPic(picPath);
 
         if(birthdayStr != null && !birthdayStr.isEmpty()) {
             LocalDate birthday = LocalDate.parse(birthdayStr);

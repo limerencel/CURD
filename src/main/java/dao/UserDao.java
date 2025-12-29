@@ -176,14 +176,15 @@ public class UserDao {
     }
 
     public static void updateUser(User user) {
-        String sql = "UPDATE user SET name=?, email=?, gender=?, birthday=?, address=? WHERE id=?";
+        String sql = "UPDATE user SET name=?, email=?, gender=?, birthday=?, address=?, pic=? WHERE id=?";
         try (Connection conn = DataSourceUtils.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setInt(3, user.getGender());
             ps.setDate(4, java.sql.Date.valueOf(user.getBirthday()));
             ps.setString(5, user.getAddress());
-            ps.setInt(6, user.getId());
+            ps.setString(6, user.getPic());
+            ps.setInt(7, user.getId());
 
             ps.executeUpdate();
 
